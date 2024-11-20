@@ -1,15 +1,14 @@
 const express = require('express');
-const cors = require('cors'); // Importiere cors
-
+const cors = require('cors'); // Importiere das CORS-Paket
 const app = express();
 
-// Erlaube CORS-Anfragen von deinem Frontend
+// CORS aktivieren
 app.use(cors({
-  origin: 'https://frontend-nu-jet-74.vercel.app', // Deine Frontend-Domain hier angeben
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Die erlaubten Methoden
+  origin: 'https://frontend-nu-jet-74.vercel.app',  // Die URL deines Frontends
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Die HTTP-Methoden, die erlaubt sind
 }));
 
-// Deine API-Routen hier (z. B. /api/tasks)
+// Beispiel-Route für Aufgaben
 app.get('/api/tasks', (req, res) => {
   res.json([
     { _id: '1', text: 'Aufgabe 1', completed: false },
