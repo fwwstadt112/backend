@@ -37,6 +37,7 @@ app.get('/api/tasks', async (req, res) => {
 });
 
 // Route zum Hinzufügen von Aufgaben (POST)
+const API_URL = 'https://backend-indol-six.vercel.app/api/tasks';
 app.post('/api/tasks', async (req, res) => {
   const { text } = req.body;
 
