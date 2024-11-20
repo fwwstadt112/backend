@@ -85,6 +85,23 @@ app.delete('/api/tasks/:id', async (req, res) => {
   }
 });
 
+app.post('/api/tasks', async (req, res) => {
+  const { text } = req.body;
+
+  if (!text) {
+    return res.status(400).json({ error: "Aufgabetext ist erforderlich" });
+  }
+
+  try {
+    const newTask = new Task({ text });
+    await newTask.save();
+    res.status(201).json(newTask); // Erfolgreich hinzugefügt
+  } catch (error) {
+    res.status(500).json({ error: "Fehler beim Hinzufügen der Aufgabe" });
+  }
+});
+
+
 // Server starten
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
