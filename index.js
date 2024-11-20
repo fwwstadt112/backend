@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const app = express();
 
 // MongoDB-Verbindung
-mongoose.connect('mongodb://fwwstadt112:112112112@cluster0tasks.lq8k0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0tasks', {
+mongoose.connect('mongodb+srv://fwwstadt112:112112112@cluster0tasks.lq8k0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0tasks', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => console.log('Datenbank verbunden'))
