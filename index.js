@@ -5,6 +5,7 @@ app.use(cors());
 require("dotenv").config();
 
 const taskRoutes = require("./routes/tasks");
+app.use("/api/tasks", taskRoutes);
 
 const app = express();
 
