@@ -3,7 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const app = express();
 
-// MongoDB-Verbindung (stellen Sie sicher, dass du die korrekte URL verwendest)
+// MongoDB-Verbindung
 mongoose.connect('mongodb+srv://fwwstadt112:112112112@cluster0tasks.lq8k0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0tasks', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -21,7 +21,7 @@ const Task = mongoose.model('Task', taskSchema);
 
 // CORS aktivieren
 app.use(cors({
-  origin: 'https://frontend-nu-jet-74.vercel.app',
+  origin: 'https://frontend-nu-jet-74.vercel.app', // Ersetze mit deiner Frontend-URL
 }));
 
 app.use(express.json()); // Damit wir JSON im Request-Body empfangen können
@@ -53,7 +53,38 @@ app.post('/api/tasks', async (req, res) => {
   }
 });
 
+// Route zum Ändern des Status einer Aufgabe (PUT)
+app.put('/api/tasks/:id', async (req, res) => {
+  const { id } = req.params;
+  const { completed } = req.body; // Der neue Status der Aufgabe
 
+  try {
+    const updatedTask = await Task.findByIdAndUpdate(id, { completed }, { new: true });
+    if (!updatedTask) {
+      return res.status(404).json({ error: 'Aufgabe nicht gefunden' });
+    }
+    res.json(updatedTask);
+  } catch (error) {
+    res.status(500).json({ error: 'Fehler beim Ändern des Status' });
+  }
+});
+
+// Route zum Löschen einer Aufgabe (DELETE)
+app.delete('/api/tasks/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deletedTask = await Task.findByIdAndDelete(id);
+    if (!deletedTask) {
+      return res.status(404).json({ error: 'Aufgabe nicht gefunden' });
+    }
+    res.status(204).send(); // Erfolgreich gelöscht
+  } catch (error) {
+    res.status(500).json({ error: 'Fehler beim Löschen der Aufgabe' });
+  }
+});
+
+// Server starten
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server läuft auf Port ${PORT}`);
