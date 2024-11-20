@@ -26,17 +26,17 @@ app.use(cors({
 
 app.use(express.json()); // Damit wir JSON im Request-Body empfangen können
 
-// Route zum Abrufen aller Aufgaben
+// Route zum Abrufen der Aufgaben (GET)
 app.get('/api/tasks', async (req, res) => {
   try {
-    const tasks = await Task.find();
+    const tasks = await Task.find(); // Alle Aufgaben aus der DB holen
     res.json(tasks);
   } catch (error) {
     res.status(500).json({ error: "Fehler beim Abrufen der Aufgaben" });
   }
 });
 
-// Route zum Hinzufügen von Aufgaben
+// Route zum Hinzufügen von Aufgaben (POST)
 app.post('/api/tasks', async (req, res) => {
   const { text } = req.body;
 
@@ -52,6 +52,7 @@ app.post('/api/tasks', async (req, res) => {
     res.status(500).json({ error: "Fehler beim Hinzufügen der Aufgabe" });
   }
 });
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
