@@ -1,22 +1,23 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-app.use(cors());
-require("dotenv").config();
-
-const taskRoutes = require("./routes/tasks");
-app.use("/api/tasks", taskRoutes);
+const express = require('express');
+const cors = require('cors'); // Importiere cors
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
-app.use("/api/tasks", taskRoutes);
+// Erlaube CORS-Anfragen von deinem Frontend
+app.use(cors({
+  origin: 'https://frontend-nu-jet-74.vercel.app', // Deine Frontend-Domain hier angeben
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Die erlaubten Methoden
+}));
 
-mongoose
-    .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => {
-        console.log("MongoDB verbunden");
-        app.listen(3000, () => console.log("Server läuft auf Port 3000"));
-    })
-    .catch((err) => console.error(err));
+// Deine API-Routen hier (z. B. /api/tasks)
+app.get('/api/tasks', (req, res) => {
+  res.json([
+    { _id: '1', text: 'Aufgabe 1', completed: false },
+    { _id: '2', text: 'Aufgabe 2', completed: true },
+  ]);
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server läuft auf Port ${PORT}`);
+});
