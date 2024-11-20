@@ -107,3 +107,13 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server läuft auf Port ${PORT}`);
 });
+
+window.addEventListener('unload', function () {
+  // Deine Logik für das Verlassen der Seite
+});
+
+// Entfernen des Event-Listeners, wenn er nicht mehr benötigt wird
+window.removeEventListener('unload', function () {
+  // Deine Logik für das Verlassen der Seite
+});
+
